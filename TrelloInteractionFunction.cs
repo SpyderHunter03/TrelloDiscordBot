@@ -46,7 +46,7 @@ namespace TrelloInteractionFunction
                 InteractionType.APPLICATION_COMMAND => new InteractionResponse
                 {
                     Type = InteractionCallbackType.CHANNEL_MESSAGE_WITH_SOURCE,
-                    Data = new InteractionCallbackData { Content = "I have received your message!" }
+                    Data = new InteractionCallbackData { Content = $"I have received your message!\n{requestBody}" }
                 },
                 InteractionType.MESSAGE_COMPONENT => throw new NotImplementedException(),
                 InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE => throw new NotImplementedException(),
