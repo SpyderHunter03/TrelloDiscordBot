@@ -99,7 +99,7 @@ namespace TrelloInteractionFunction
             return new InteractionResponse
             {
                 Type = InteractionCallbackType.CHANNEL_MESSAGE_WITH_SOURCE,
-                Data = new InteractionCallbackData { Content = $"Your project idea has been created.\nSee the project board at: https://trello.com/b/FKST3Rol/spyder-web-projects" }
+                Data = new InteractionCallbackData { Content = $"URL:{sb}\nResponse:{response}\nYour project idea has been created.\nSee the project board at: https://trello.com/b/FKST3Rol/spyder-web-projects" }
             };
         }
     }
