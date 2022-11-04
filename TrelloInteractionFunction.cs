@@ -87,8 +87,8 @@ namespace TrelloInteractionFunction
             var requestorsName = request.Member.User.UserName;
 
             // The id list in here is for the Projects to Consider endpoint
-            StringBuilder sb = new("https://api.trello.com/1/cards?idList=6363120fddb1c80281d74a5f?");
-            sb.Append($"key={TRELLO_KEY}");
+            StringBuilder sb = new("https://api.trello.com/1/cards?idList=6363120fddb1c80281d74a5f");
+            sb.Append($"&key={TRELLO_KEY}");
             sb.Append($"&token={TRELLO_TOKEN}");
             sb.Append($"&name={projectName}");
             sb.Append($"&desc={projectDescription} Requested By {requestorsName}");
