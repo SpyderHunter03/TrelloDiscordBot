@@ -91,7 +91,7 @@ namespace TrelloInteractionFunction
             sb.Append($"key={TRELLO_KEY}");
             sb.Append($"&token={TRELLO_TOKEN}");
             sb.Append($"&name={projectName}");
-            sb.Append($"&desc=\"{projectDescription}\nRequested By: {requestorsName}\"");
+            sb.Append($"&desc={projectDescription} Requested By {requestorsName}");
 
             using HttpClient httpClient = new(); // The id list in here is for the Projects to Consider endpoint
             var response = await httpClient.PostAsync(sb.ToString(), null);
