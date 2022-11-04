@@ -47,7 +47,7 @@ namespace TrelloInteractionFunction
             var response = data.Type switch
             {
                 InteractionType.PING => new InteractionResponse { Type = InteractionCallbackType.PONG },
-                InteractionType.APPLICATION_COMMAND => await HandleApplicationCommand(data),
+                InteractionType.APPLICATION_COMMAND => await HandleApplicationCommand(data, log),
                 InteractionType.MESSAGE_COMPONENT => throw new NotImplementedException(),
                 InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE => throw new NotImplementedException(),
                 InteractionType.MODAL_SUBMIT => throw new NotImplementedException(),
@@ -71,16 +71,16 @@ namespace TrelloInteractionFunction
             return isVerified;
         }
 
-        private async static Task<InteractionResponse> HandleApplicationCommand(InteractionRequest request)
+        private async static Task<InteractionResponse> HandleApplicationCommand(InteractionRequest request, ILogger log)
         {
             return request.Data.Name switch
             {
-                "addprojectidea" => await HandleAddProjectIdea(request),
+                "addprojectidea" => await HandleAddProjectIdea(request, log),
                 _ => throw new NotImplementedException()
             };
         }
 
-        private async static Task<InteractionResponse> HandleAddProjectIdea(InteractionRequest request)
+        private async static Task<InteractionResponse> HandleAddProjectIdea(InteractionRequest request, ILogger log)
         {
             var projectName = request.Data.Options.First(o => o.Name.Equals("name", StringComparison.InvariantCultureIgnoreCase)).Value;
             var projectDescription = request.Data.Options.First(o => o.Name.Equals("description", StringComparison.InvariantCultureIgnoreCase)).Value;
@@ -96,10 +96,13 @@ namespace TrelloInteractionFunction
             using HttpClient httpClient = new(); // The id list in here is for the Projects to Consider endpoint
             var response = await httpClient.PostAsync(sb.ToString(), null);
 
+            log.LogInformation($"Request URL:{sb}");
+            log.LogInformation($"Response:{response}");
+
             return new InteractionResponse
             {
                 Type = InteractionCallbackType.CHANNEL_MESSAGE_WITH_SOURCE,
-                Data = new InteractionCallbackData { Content = $"URL:{sb}\nResponse:{response}\nYour project idea has been created.\nSee the project board at: https://trello.com/b/FKST3Rol/spyder-web-projects" }
+                Data = new InteractionCallbackData { Content = $"Your project idea has been created.\nSee the project board at: https://trello.com/b/FKST3Rol/spyder-web-projects" }
             };
         }
     }
